@@ -1,0 +1,14 @@
+# Ignore Terraform state and cache files
+*.tfstate
+*.tfstate.*
+.terraform/
+
+# Ignore AWS credentials (never push these)
+~/.aws/credentials
+~/.aws/config
+
+# Ignore any file that stores secrets directly
+# secrets.json
+
+# Ignore IDE or system files
+.DS_Store

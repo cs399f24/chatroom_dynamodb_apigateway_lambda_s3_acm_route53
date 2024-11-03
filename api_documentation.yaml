@@ -1,0 +1,131 @@
+swagger: '2.0'
+info:
+  version: '2024-11-02T23:39:39Z'
+  title: ChatAPI
+  description: API for interacting with the 399Chatroom. This API allows users to retrieve chat messages and post new messages.
+host: api.399chatroom.com
+schemes:
+  - https
+paths:
+  /:
+    get:
+      summary: Retrieve chat messages
+      description: Fetches the latest chat messages from the chatroom.
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: A successful response with the latest chat messages.
+          schema:
+            $ref: '#/definitions/Empty'
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+              description: CORS header to allow requests from any origin.
+      x-amazon-apigateway-integration:
+        type: aws
+        httpMethod: POST
+        uri: arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-2:897722697559:function:getChatMessages/invocations
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        passthroughBehavior: when_no_match
+        timeoutInMillis: 29000
+        contentHandling: CONVERT_TO_TEXT
+    post:
+      summary: Post a new chat message
+      description: Allows users to post a new message to the chatroom.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Message successfully posted to the chatroom.
+          schema:
+            $ref: '#/definitions/Empty'
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+              description: CORS header to allow requests from any origin.
+            Access-Control-Allow-Methods:
+              type: string
+              description: CORS header to specify allowed HTTP methods.
+            Access-Control-Allow-Headers:
+              type: string
+              description: CORS header to specify allowed headers.
+      x-amazon-apigateway-integration:
+        type: aws
+        httpMethod: POST
+        uri: arn:aws:apigateway:us-east-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-2:897722697559:function:storeChatMessage/invocations
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''POST'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        requestTemplates:
+          application/json: |-
+            #if($input.json('$') != "")
+                $input.json('$')
+            #else
+                {}
+            #end
+        passthroughBehavior: when_no_match
+        timeoutInMillis: 29000
+        contentHandling: CONVERT_TO_TEXT
+    options:
+      summary: CORS Preflight
+      description: Handles CORS preflight requests for the API.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: CORS preflight response
+          schema:
+            $ref: '#/definitions/Empty'
+          headers:
+            Access-Control-Allow-Origin:
+              type: string
+              description: CORS header to allow requests from any origin.
+            Access-Control-Allow-Methods:
+              type: string
+              description: CORS header to specify allowed HTTP methods.
+            Access-Control-Allow-Headers:
+              type: string
+              description: CORS header to specify allowed headers.
+      x-amazon-apigateway-integration:
+        type: mock
+        responses:
+          default:
+            statusCode: '200'
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: '''GET,OPTIONS,POST'''
+              method.response.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'''
+              method.response.header.Access-Control-Allow-Origin: '''*'''
+        requestTemplates:
+          application/json: '{"statusCode": 200}'
+        passthroughBehavior: when_no_match
+definitions:
+  Empty:
+    type: object
+    title: Empty Schema
+    description: An empty schema, used as a placeholder for endpoints without a specific response structure.
+x-amazon-apigateway-gateway-responses:
+  DEFAULT_5XX:
+    description: Default 5XX response for server errors.
+    responseParameters:
+      gatewayresponse.header.Access-Control-Allow-Methods: '''GET,OPTIONS,POST'''
+      gatewayresponse.header.Access-Control-Allow-Origin: '''*'''
+      gatewayresponse.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'''
+  DEFAULT_4XX:
+    description: Default 4XX response for client errors.
+    responseParameters:
+      gatewayresponse.header.Access-Control-Allow-Methods: '''GET,OPTIONS,POST'''
+      gatewayresponse.header.Access-Control-Allow-Origin: '''*'''
+      gatewayresponse.header.Access-Control-Allow-Headers: '''Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'''
