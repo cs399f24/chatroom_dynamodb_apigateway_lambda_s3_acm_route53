@@ -1,3 +1,3 @@
 # Overview
 
-![Architecture Diagram](ArchitectureDiagramv2.png)
+![Architecture Diagram](ArchitectureDiagramv3.png)
