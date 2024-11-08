@@ -13,7 +13,7 @@ for lambda_dir in $LAMBDA_BASE_DIR/*/; do
         echo "Processing Lambda function: $lambda_name"
 
         # Navigate to Lambda function directory
-        cd "$lambda_dir" || exit
+        cd "$lambda_dir" || { echo "Failed to navigate to $lambda_dir"; exit 1; }
 
         # Install dependencies in a temporary directory to avoid polluting the function directory
         mkdir -p temp_node_modules
@@ -27,7 +27,7 @@ for lambda_dir in $LAMBDA_BASE_DIR/*/; do
         echo "Created ZIP file: $zip_path"
 
         # Go back to the root directory
-        cd - > /dev/null || exit
+        cd - > /dev/null || { echo "Failed to return to the root directory"; exit 1; }
     fi
 done
 
