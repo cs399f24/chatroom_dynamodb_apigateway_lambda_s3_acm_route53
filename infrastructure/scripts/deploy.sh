@@ -1,31 +1,41 @@
 #!/bin/bash
 
-# Define constants
-AWS_REGION="us-east-2"
-UUID=$(date +%s)  # Replace this with a consistent UUID if necessary
+# Move to the project root
+cd "$(dirname "$0")"/../../
 
-# Define Lambda function names
-LAMBDA_FUNCTION_NAME_GET="newGetChatMessages_$UUID"
-LAMBDA_FUNCTION_NAME_STORE="newStoreChatMessage_$UUID"
+# Set up paths
+VENV_DIR="dependencies/venv"
+REQUIREMENTS_FILE="dependencies/requirements.txt"
+UP_SCRIPT="infrastructure/scripts/up.sh"
 
-# Create a virtual environment in a temporary folder
-TEMP_DIR=$(mktemp -d)
-python3 -m venv $TEMP_DIR/venv
+# Check for and create virtual environment
+if [ ! -d "$VENV_DIR" ]; then
+    echo "Creating virtual environment..."
+    python3 -m venv "$VENV_DIR"
+fi
 
-# Activate the virtual environment
-source $TEMP_DIR/venv/bin/activate
+# Activate virtual environment
+source "$VENV_DIR/bin/activate"
 
-# Install dependencies in the virtual environment
-pip install -r infrastructure/lambdas/requirements.txt
+# Install dependencies
+if [ -f "$REQUIREMENTS_FILE" ]; then
+    echo "Installing dependencies from $REQUIREMENTS_FILE..."
+    pip install -r "$REQUIREMENTS_FILE"
+else
+    echo "Requirements file not found: $REQUIREMENTS_FILE"
+    exit 1
+fi
 
-# Run the up.sh script
-echo "Running the up.sh script to deploy resources..."
-bash infrastructure/scripts/up.sh
+# Run the up.sh deployment script
+if [ -f "$UP_SCRIPT" ]; then
+    echo "Running the up.sh script to deploy resources..."
+    bash "$UP_SCRIPT"
+else
+    echo "Deployment script not found: $UP_SCRIPT"
+    exit 1
+fi
 
-# Deactivate the virtual environment
+# Deactivate virtual environment
 deactivate
-
-# Clean up the temporary directory
-rm -rf $TEMP_DIR
 
 echo "Deployment completed."
