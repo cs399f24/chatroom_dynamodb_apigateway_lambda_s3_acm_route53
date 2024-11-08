@@ -58,8 +58,15 @@ chmod +x scripts/deploy.sh
 #### Start the application:
 
 ```bash
-chmod +x scripts/up.sh
-./scripts/up.sh
+chmod +x infrastructure/scripts/up.sh
+```
+
+```bash
+cd infrastructure/scripts
+```
+
+```bash
+bash up.sh
 ```
 
 #### Remove all resources:
