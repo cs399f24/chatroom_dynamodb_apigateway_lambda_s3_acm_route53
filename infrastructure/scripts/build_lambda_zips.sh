@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # Set the base directory for Lambda functions
-LAMBDA_BASE_DIR="../lambdas"
+LAMBDA_BASE_DIR="infrastructure/lambdas"
 
 echo "Building Lambda function ZIP files..."
 
 # Loop through each Lambda function directory
-for lambda_dir in $LAMBDA_BASE_DIR/*/; do
+for lambda_dir in "$LAMBDA_BASE_DIR"/*/; do
     if [[ -d "$lambda_dir" ]]; then
         lambda_name=$(basename "$lambda_dir")
         zip_path="$lambda_dir$lambda_name.zip"
@@ -14,6 +14,12 @@ for lambda_dir in $LAMBDA_BASE_DIR/*/; do
 
         # Navigate to Lambda function directory
         cd "$lambda_dir" || exit
+
+        # Check if package.json exists, create if it doesn't
+        if [[ ! -f "package.json" ]]; then
+            echo "Creating package.json for $lambda_name..."
+            echo '{ "name": "'$lambda_name'", "version": "1.0.0", "main": "index.js", "dependencies": {} }' > package.json
+        fi
 
         # Install dependencies in a temporary directory to avoid polluting the function directory
         mkdir -p temp_node_modules
