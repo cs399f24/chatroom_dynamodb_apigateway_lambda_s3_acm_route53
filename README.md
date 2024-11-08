@@ -51,8 +51,15 @@ The application includes three main scripts:
 #### Deploy all resources:
 
 ```bash
-chmod +x scripts/deploy.sh
-./scripts/deploy.sh
+chmod +x infrastructure/scripts/deploy.sh
+```
+
+```bash
+cd infrastructure/scripts
+```
+
+```bash
+bash deploy.sh
 ```
 
 #### Start the application:
