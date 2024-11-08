@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatroom</title>
+    <link rel="stylesheet" href="main.css">
+    <!-- Add AWS SDK -->
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1001.0.min.js"></script>
+</head>
+<body>
+    <div class="login-container" id="login-container">
+        <h2>Enter your screen name</h2>
+        <input type="text" id="username-input" placeholder="Screen name" autocomplete="off" />
+        <button id="login-button">Enter Chatroom</button>
+    </div>
+    <div class="chat-container" id="chat-container" style="display: none;">
+        <div id="chat"></div>
+        <div class="message-input-container">
+            <input type="text" id="message-input" placeholder="Type your message here..." autocomplete="off" />
+            <button id="send-button">Send</button>
+        </div>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>
