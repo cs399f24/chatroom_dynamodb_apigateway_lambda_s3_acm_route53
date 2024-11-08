@@ -1,9 +1,13 @@
 #!/bin/bash
 
 # Set the base directory for Lambda functions
-LAMBDA_BASE_DIR="lambdas"
+LAMBDA_BASE_DIR="infrastructure/lambdas"  # Updated path
 
 echo "Building Lambda function ZIP files..."
+
+# List the contents of the lambdas directory for debugging
+echo "Contents of $LAMBDA_BASE_DIR:"
+ls "$LAMBDA_BASE_DIR"
 
 # Loop through each Lambda function directory
 for lambda_dir in $LAMBDA_BASE_DIR/*/; do
