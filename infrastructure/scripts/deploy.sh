@@ -7,7 +7,7 @@ cd "$(dirname "$0")"/../../
 VENV_DIR="dependencies/venv"
 REQUIREMENTS_FILE="dependencies/requirements.txt"
 UP_SCRIPT="infrastructure/scripts/up.sh"
-BUILD_ZIP_SCRIPT="scripts/build_lambda_zips.sh"  # Path to the ZIP building script
+BUILD_ZIP_SCRIPT="infrastructure/scripts/build_lambda_zips.sh"  # Path to the ZIP building script
 
 # Check for and create virtual environment
 if [ ! -d "$VENV_DIR" ]; then
