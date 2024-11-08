@@ -7,6 +7,7 @@ cd "$(dirname "$0")"/../../
 VENV_DIR="dependencies/venv"
 REQUIREMENTS_FILE="dependencies/requirements.txt"
 UP_SCRIPT="infrastructure/scripts/up.sh"
+BUILD_ZIP_SCRIPT="scripts/build_lambda_zips.sh"  # Path to the ZIP building script
 
 # Check for and create virtual environment
 if [ ! -d "$VENV_DIR" ]; then
@@ -23,6 +24,15 @@ if [ -f "$REQUIREMENTS_FILE" ]; then
     pip install -r "$REQUIREMENTS_FILE"
 else
     echo "Requirements file not found: $REQUIREMENTS_FILE"
+    exit 1
+fi
+
+# Build Lambda ZIP files
+if [ -f "$BUILD_ZIP_SCRIPT" ]; then
+    echo "Building Lambda ZIP files..."
+    bash "$BUILD_ZIP_SCRIPT"
+else
+    echo "Build script not found: $BUILD_ZIP_SCRIPT"
     exit 1
 fi
 

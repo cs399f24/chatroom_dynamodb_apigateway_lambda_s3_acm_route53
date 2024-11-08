@@ -1,13 +1,13 @@
 #!/bin/bash
 
-# Set AWS Region and unique identifier for resources
+# Set AWS Region
 AWS_REGION="us-east-2"
 UUID="<use-same-UUID-as-deployed>"  # Replace with the UUID used in deploy/up script for consistency
 
-# Define Lambda function names
-LAMBDA_FUNCTION_NAME_GET="newGetChatMessages_$UUID"
-LAMBDA_FUNCTION_NAME_STORE="newStoreChatMessage_$UUID"
-API_NAME="ChatAPI_$UUID"
+# Define Lambda function names and API name
+LAMBDA_FUNCTION_NAME_GET="getChatMessages"  # Use the actual function name
+LAMBDA_FUNCTION_NAME_STORE="storeChatMessage"  # Use the actual function name
+API_NAME="ChatAPI"
 
 # Delete Lambda functions
 echo "Deleting Lambda functions..."
@@ -26,7 +26,7 @@ else
 fi
 
 # Optionally, delete DynamoDB table (if created dynamically)
-DYNAMODB_TABLE_NAME="ChatMessages_$UUID"
+DYNAMODB_TABLE_NAME="ChatMessages"  # Use the actual table name
 echo "Deleting DynamoDB table..."
 aws dynamodb delete-table --table-name $DYNAMODB_TABLE_NAME --region $AWS_REGION
 echo "DynamoDB table deleted."
