@@ -74,7 +74,7 @@ fi
 echo "Deploying getChatMessages Lambda..."
 aws lambda create-function \
     --function-name getChatMessages \
-    --zip-file fileb://lambdas/getChatMessages/getChatMessages.zip \
+    --zip-file fileb://infrastructure/lambdas/getChatMessages/getChatMessages.zip \
     --handler index.handler \
     --runtime nodejs18.x \
     --role $ROLE_ARN || echo "Lambda getChatMessages already exists"
@@ -83,11 +83,11 @@ aws lambda create-function \
 echo "Deploying storeChatMessage Lambda..."
 aws lambda create-function \
     --function-name storeChatMessage \
-    --zip-file fileb://lambdas/storeChatMessage/storeChatMessage.zip \
+    --zip-file fileb://infrastructure/lambdas/storeChatMessage/storeChatMessage.zip \
     --handler index.handler \
     --runtime nodejs18.x \
     --role $ROLE_ARN || echo "Lambda storeChatMessage already exists"
-
+    
 # Step 4: Set up API Gateway for the functions
 
 # Create the API Gateway if not already created
