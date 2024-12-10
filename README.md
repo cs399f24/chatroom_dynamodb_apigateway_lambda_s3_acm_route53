@@ -1,9 +1,15 @@
-# Overview
+# AWS Chatroom with DynamoDB, API Gateway, Lambda, S3, ACM, and Route53
+
+A serverless chat application built using various AWS services demonstrating cloud architecture and infrastructure as code.
+
+# Architecture Diagram
 
 ![Architecture Diagram](ArchitectureDiagramv4.png)
 
-# AWS Chatroom with DynamoDB, API Gateway, Lambda, S3, ACM, and Route53
-A serverless chat application built using various AWS services demonstrating cloud architecture and infrastructure as code.
+# Architecture Flowchart
+
+![Architecture Diagram](chatroom_ArchitectureFlowchartv2.gif)
+
 
 ## Architecture
 
